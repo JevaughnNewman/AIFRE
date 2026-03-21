@@ -15,11 +15,14 @@
 ### 🏗️ The Architecture: Forensic Medallion Framework
 The engine utilizes a three-tier Medallion Architecture within Snowflake to transform "toxic" raw data into auditable intelligence.
 
-* **Bronze (The Evidence Locker):** Immutable ingestion of raw identity and network logs.
-* **Silver (The Investigation & Fusion):**
+* **🥉 Bronze (The Evidence Locker):** * Immutable ingestion of raw identity, financial, and network logs.
+    * Focus: Data preservation for forensic re-processing.
+* **🥈 Silver (The Investigation & Fusion):**
     * **Historical Engine (SCD Type 2):** Uses dbt snapshots to track identity evolution and "Nurtured" account patterns.
     * **Standardization:** Custom REGEX logic to collapse "Address Munging" clusters in the GTA corridor.
-* **Gold (The Decision Support):** High-velocity marts for **Whale Concentration** and **Bot Penetration** metrics.
+    * **Domain Fusion:** Joins fragmented digital fingerprints with financial records to close the "Visibility Gap."
+* **🥇 Gold (The Decision Support):** * High-velocity marts optimized for executive reporting.
+    * Metrics: **Whale Concentration**, **Bot Penetration Rates**, and **Sector Risk Profiling**.
 
 ---
 
