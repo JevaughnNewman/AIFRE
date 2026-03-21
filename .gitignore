@@ -1,0 +1,27 @@
+# === dbt Specific ===
+# These are auto-generated and shouldn't be on GitHub
+target/
+dbt_packages/
+dbt_modules/
+logs/
+
+# === Security & Credentials ===
+# NEVER upload your real profiles.yml
+profiles.yml
+.env
+*.pem
+*.key
+
+# === Python & OS Junk ===
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# === Data Files ===
+# Block large CSVs or JSONs from accidental upload
+*.csv
+*.json
+!dbt_project.yml # Keep the config file
