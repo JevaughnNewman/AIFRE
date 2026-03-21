@@ -1,1 +1,36 @@
+-- ==========================================
+-- AIFRE: Snowflake Infrastructure & RBAC Setup
+-- Purpose: Establish the Medallion environment with Cost Governance
+-- ==========================================
 
+USE ROLE ACCOUNTADMIN;
+
+-- 1. Create the AIFRE Warehouse (Small for cost-efficiency, Auto-suspend 60s)
+CREATE OR REPLACE WAREHOUSE AIFRE_WH 
+    WITH WAREHOUSE_SIZE = 'XSMALL' 
+    AUTO_SUSPEND = 60 
+    AUTO_RESUME = TRUE 
+    COMMENT = 'Dedicated Warehouse for AIFRE Fraud Engine processing';
+
+-- 2. Create the Medallion Databases
+CREATE OR REPLACE DATABASE AIFRE_BRONZE COMMENT = 'Immutable Raw Evidence Locker';
+CREATE OR REPLACE DATABASE AIFRE_SILVER COMMENT = 'Refined & Fused Forensic Data';
+CREATE OR REPLACE DATABASE AIFRE_GOLD   COMMENT = 'Business Marts & KPI Aggregates';
+
+-- 3. Role-Based Access Control (RBAC) Setup
+CREATE OR REPLACE ROLE AIFRE_TRANSFORMER;
+GRANT USAGE ON WAREHOUSE AIFRE_WH TO ROLE AIFRE_TRANSFORMER;
+
+-- Bronze Access (Read-Only to ensure Immutability)
+GRANT USAGE ON DATABASE AIFRE_BRONZE TO ROLE AIFRE_TRANSFORMER;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE AIFRE_BRONZE TO ROLE AIFRE_TRANSFORMER;
+GRANT SELECT ON ALL TABLES IN DATABASE AIFRE_BRONZE TO ROLE AIFRE_TRANSFORMER;
+
+-- Silver/Gold Access (Full DDL/DML for dbt to operate)
+GRANT ALL PRIVILEGES ON DATABASE AIFRE_SILVER TO ROLE AIFRE_TRANSFORMER;
+GRANT ALL PRIVILEGES ON DATABASE AIFRE_GOLD TO ROLE AIFRE_TRANSFORMER;
+
+-- 4. Create a specialized Schema for JSON Network Logs
+USE DATABASE AIFRE_BRONZE;
+CREATE OR REPLACE SCHEMA NETWORK_LOGS;
+-- Note: This is where the 150k JSON logs are ingested into VARIANT columns.
