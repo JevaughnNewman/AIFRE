@@ -1,0 +1,13 @@
+aifre_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: [your_account_locator]
+      user: [your_username]
+      password: [your_password]
+      role: AIFRE_TRANSFORMER
+      database: AIFRE_SILVER
+      warehouse: AIFRE_WH
+      schema: SILVER_STAGING
+      threads: 4
