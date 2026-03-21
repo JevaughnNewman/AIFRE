@@ -1,6 +1,13 @@
+# dbt artifacts
 target/
 dbt_packages/
-dbt_modules/
 logs/
+
+# Security & Credentials
 profiles.yml
 .env
+*.db
+*.pyc
+
+# OS junk
+.DS_Store
