@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: bronze_raw
+    database: AIFRE_RISK
+    schema: BRONZE
+    tables:
+      - name: AIFRE_IDENTITY_REGISTRY_RAW
+      - name: AIFRE_LEDGER_RAW
+      - name: AIFRE_LOGS_RAW
