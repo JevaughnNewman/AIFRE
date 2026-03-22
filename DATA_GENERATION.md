@@ -105,7 +105,7 @@ The GTA corridor was chosen deliberately. Its dense M- and L-prefix postal code 
 **Prevalence:** 40% of hotspot claimants funnelled toward six named suspicious merchants.
 
 **Encoding (`ledger_gen.py`):**
-A pool of six named clinics and legal hubs was defined alongside 1,000 standard vendor nodes. Hotspot claimants — identified by cross-referencing the identity file at generation time — face a 40% probability of being routed to a suspicious merchant at elevated billing amounts.
+A pool of six named clinics and legal hubs was defined alongside 1,000 standard vendor nodes. Hotspot claimants identified by cross-referencing the identity file at generation time face a 40% probability of being routed to a suspicious merchant at elevated billing amounts.
 
 ```python
 # ledger_gen.py - Power law distribution
@@ -128,7 +128,7 @@ The 1,000-vendor standard pool was deliberately sized to simulate a real city's 
 **Prevalence:** All APP_IDs where `app_num % 12 == 0` routed through the fraud IP pool (~8.3% of sessions).
 
 **Encoding (`network_logs_gen.py`):**
-Bot behavior is encoded through four simultaneous signals: proxy IP reuse, a shared fraud device ID, a non-human browser agent (`Python-Requests`), and near-zero page dwell time (1-3 seconds vs. 30-300 for legitimate sessions).
+Bot behaviour is encoded through four simultaneous signals: proxy IP reuse, a shared fraud device ID, a non-human browser agent (`Python-Requests`), and near-zero page dwell time (1-3 seconds vs. 30-300 for legitimate sessions).
 
 ```python
 # network_logs_gen.py - Coordinated bot attack logic
@@ -150,13 +150,13 @@ The `% 12` modulus was chosen deliberately to create a non-contiguous, non-obvio
 ### 5. Whale Concentration
 
 **Encoding (`ledger_gen.py`):**
-The power law distribution created by funneling hotspot claimants to high-value suspicious merchants ($1,900-$2,450 per transaction) concentrates disproportionate exposure in a small claimant population. No explicit whale flag was injected — the concentration emerges organically from the funneling logic, which is how whale patterns appear in real production data.
+The power law distribution created by funnelling hotspot claimants to high-value suspicious merchants ($1,900-$2,450 per transaction) concentrates disproportionate exposure in a small claimant population. No explicit whale flag was injected — the concentration emerges organically from the funnelling logic, which is how whale patterns appear in real production data.
 
 ---
 
 ### 6. Structuring-like Patterns
 
-**Prevalence:** Combination of three overlapping behaviors encoded across the fraud SIN pool.
+**Prevalence:** A combination of three overlapping behaviours encoded across the fraud SIN pool.
 
 **Encoding (`ledger_gen.py`):**
 
@@ -210,6 +210,6 @@ After generation, the following checks confirmed the data behaved as designed:
 
 ## Privacy Compliance
 
-No real personal information was used at any stage. All names, addresses, contact details, and identifiers are procedurally generated. GTA postal codes and street names are used for geographic realism but are not associated with any real individual. The four hotspot addresses reference real street names in Ontario because geographic specificity is required to simulate address munging detection — no real resident data was used or implied.
+No real personal information was used at any stage. All names, addresses, contact details, and identifiers are procedurally generated. GTA postal codes and street names are used for geographic realism but are not associated with any real individual. The four hotspot addresses reference real street names in Ontario because geographic specificity is required to simulate address munging detection. No real resident data was used or implied.
 
-This dataset meets the de-identification standard under PHIPA Schedule 3 and the anonymization guidance under PIPEDA — though it is not derived from real data at all.
+This dataset meets the de-identification standard under PHIPA Schedule 3 and the anonymization guidance under PIPEDA, though it is not derived from real data at all.
