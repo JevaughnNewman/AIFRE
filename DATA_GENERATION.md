@@ -6,13 +6,13 @@
 
 Real Ontario insurance claims data is protected under **PIPEDA** (Personal Information Protection and Electronic Documents Act) at the federal level and **PHIPA** (Personal Health Information Protection Act) at the provincial level. Accessing production claims data for portfolio or research purposes without explicit institutional authorization is legally prohibited.
 
-Synthetic data generation was therefore not a shortcut — it was the only compliant path. The goal was to produce a dataset that is **statistically representative** of real-world insurance fraud patterns while containing zero real personal information.
+Synthetic data generation was therefore not just a shortcut; it was the only compliant path. The goal was to produce a dataset that is **statistically representative** of real-world insurance fraud patterns while containing zero real personal information.
 
 ---
 
 ## Design Philosophy: Adversarial by Default
 
-Most synthetic datasets are generated to be *clean*. This dataset was generated to be *adversarial* — meaning it was deliberately constructed with the quality defects, fragmentation patterns, and obfuscation techniques that real fraud data exhibits in production ingestion pipelines.
+Most synthetic datasets are generated to be *clean*. This dataset was generated to be *adversarial*, meaning it was deliberately constructed with the quality defects, fragmentation patterns, and mystification techniques that real fraud data exhibits in production ingestion pipelines.
 
 A clean synthetic dataset would only demonstrate that the pipeline works under ideal conditions. An adversarial dataset demonstrates that the pipeline is forensically robust under the conditions it will actually encounter.
 
@@ -20,7 +20,7 @@ A clean synthetic dataset would only demonstrate that the pipeline works under i
 
 ## Reproducibility
 
-All three generation scripts use Python's `random` library combined with `numpy` for high-volume record generation. A fixed random seed was applied to ensure the dataset is fully reproducible — any re-run of the scripts produces identical output. This is consistent with standard data engineering practice for testable, auditable pipelines.
+All three generation scripts utilize Python's `random` library, combined with `numpy`, for high-volume record generation. A fixed random seed was applied to ensure the dataset is fully reproducible, so any re-run of the scripts produces identical output. This is consistent with standard data engineering practice for testable, auditable pipelines.
 
 ---
 
