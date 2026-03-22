@@ -8,7 +8,7 @@
 
 Ontario's Statutory Accident Benefits Schedule (SABS) is one of the most fraud-vulnerable insurance frameworks in Canada. Informed by front-line exposure to claims and accident benefits processing, this project was built to answer a specific question: **can a modern analytics engineering stack detect coordinated fraud patterns that manual adjudication consistently misses?**
 
-AIFRE simulates the data environment of a mid-sized Ontario insurer - raw, adversarial, and deliberately difficult - and constructs a forensic pipeline capable of surfacing $69.3M in isolated exposure-at-risk across six distinct fraud typologies.
+AIFRE simulates the data environment of a mid-sized Ontario insurer (raw, adversarial, and deliberately difficult) and constructs a forensic pipeline capable of surfacing $69.3M in isolated exposure-at-risk across six distinct fraud typologies.
 
 ---
 
@@ -26,7 +26,7 @@ AIFRE simulates the data environment of a mid-sized Ontario insurer - raw, adver
 
 ## Architecture: Forensic Medallion Framework
 
-The engine uses a three-tier Medallion Architecture within Snowflake. Each layer has a distinct forensic purpose - data is never overwritten at source, and every transformation is auditable.
+The engine uses a three-tier Medallion Architecture within Snowflake. Each layer has a distinct forensic purpose: data is never overwritten at source, and every transformation is auditable.
 
 ```
 RAW SOURCES (CSV / JSON)
@@ -34,7 +34,7 @@ RAW SOURCES (CSV / JSON)
         ▼
 ┌───────────────────┐
 │  🥉 BRONZE        │  Immutable Evidence Locker
-│  Raw Ingestion    │  Exact source fidelity - no cleansing
+│  Raw Ingestion    │  Exact source fidelity, no cleansing
 └────────┬──────────┘
          │
          ▼
@@ -59,27 +59,26 @@ Raw identity records, financial claims, network logs, and device telemetry are i
 This is where the analytical work happens across three sub-layers:
 
 **1. Historical Engine (SCD Type 2)**
-Identity records for claimants, clinics, and providers are tracked using dbt snapshots with `valid_from` / `valid_to` timestamps. This is a deliberate architectural choice over SCD Type 1: overwriting identity records would destroy the forensic signal of "nurtured" accounts - entities that cycle through addresses, phone numbers, or associated providers over time to evade detection. SCD Type 2 preserves the full evolution chain.
+Identity records for claimants, clinics, and providers are tracked using dbt snapshots with `valid_from` / `valid_to` timestamps. This is a deliberate architectural choice over SCD Type 1: overwriting identity records would destroy the forensic signal of "nurtured" accounts (entities that cycle through addresses, phone numbers, or associated providers over time to evade detection). SCD Type 2 preserves the full evolution chain.
 
-Reference/lookup data (postal code mappings, sector code descriptions) uses **SCD Type 1** - these are corrections with no forensic value in their history.
+Reference/lookup data (postal code mappings, sector code descriptions) uses **SCD Type 1**, as these are corrections with no forensic value in their history.
 
 **2. Address Munging Resolution**
 Custom REGEX logic collapses identity fragmentation clusters in the GTA corridor. A single fraudulent claimant may appear as "123 Main St", "123 Main Street", "123 mane st Apt 2B", and "123 MAIN STREET UNIT 2" across different claim submissions. Silver standardizes these into canonical identity clusters before joins.
 
 **3. Domain Fusion**
-Fragmented digital fingerprints (IP logs, device IDs) are joined to financial claim records to close the "Visibility Gap" - the space between what a claimant submits and what their network behaviour reveals. The three source domains were generated with deliberate cross-dataset linkages - fraud signals embedded in identity, ledger, and network logs simultaneously - meaning domain fusion is the only path to a confirmed fraud signal. No single source is sufficient in isolation.
+Fragmented digital fingerprints (IP logs, device IDs) are joined to financial claim records to close the "Visibility Gap" (the space between what a claimant submits and what their network behaviour reveals). The three source domains were generated with deliberate cross-dataset linkages, with fraud signals embedded in identity, ledger, and network logs simultaneously, meaning domain fusion is the only path to a confirmed fraud signal. No single source is sufficient in isolation.
 
 Materialized as **views** to remain flexible as upstream data evolves.
 
 ### Gold - Decision Support
 
-High-velocity analytical marts optimized for BI consumption and regulatory reporting. Key marts:
+High-velocity analytical marts optimized for BI consumption and regulatory reporting. Key models:
 
-- `mart_risk_score` - Entity-level composite risk scoring
-- `mart_siu_referral_flags` - SIU escalation logic based on FSRA guidance
-- `mart_whale_concentration` - Claimant exposure concentration analysis
-- `mart_bot_penetration` - Automated submission pattern detection
-- `mart_sector_risk_profile` - Provider/clinic risk by sector
+- `fct_claimant_risk`: Entity-level composite risk scoring across all fraud typologies
+- `fct_daily_velocity`: Submission velocity analysis for automated and bot-driven claim detection
+- `fct_fraud_exposure`: Claimant exposure concentration and whale pattern analysis
+- `dim_provider_status`: Provider and clinic risk profiling by sector
 
 Materialized as **tables** for query performance against Tableau.
 
@@ -87,7 +86,7 @@ Materialized as **tables** for query performance against Tableau.
 
 ## Schema Design: STAR Schema
 
-After forensic cleansing in Silver, Gold marts are structured as a STAR schema - a central fact table surrounded by dimension tables. This was chosen over 3NF for two reasons: (1) fraud detection is a read-heavy, aggregation-heavy workload that benefits from denormalized joins, and (2) it maps cleanly to the BI layer without requiring analysts to understand complex relational joins.
+After forensic cleansing in Silver, Gold marts are structured as a STAR schema, with a central fact table surrounded by dimension tables. This was chosen over 3NF for two reasons: (1) fraud detection is a read-heavy, aggregation-heavy workload that benefits from denormalized joins, and (2) it maps cleanly to the BI layer without requiring analysts to understand complex relational joins.
 
 ```
                     dim_claimant (SCD2)
@@ -135,10 +134,10 @@ dim_clinic ───── fct_claims ───── dim_device
 A single IP address (`45.33.22.11`) was responsible for **2,270 fraudulent claims** totalling **$3.68M** in exposure. Silver-layer device fusion exposed the pattern; Bronze preservation confirmed the IP appeared across 14 distinct synthetic claimant identities.
 
 ### The Whale Outlier
-The top 10 claimants by exposure represent **$1.1M** in concentrated risk - a Whale Concentration ratio that would trigger enhanced review under IBC fraud detection guidelines.
+The top 10 claimants by exposure represent **$1.1M** in concentrated risk, a Whale Concentration ratio that would trigger enhanced review under IBC fraud detection guidelines.
 
 ### Sector Risk: Medical Clinics
-Medical clinics emerged as the highest-severity provider sector with an average claim value of **$57.3k** - consistent with known SABS abuse patterns in Ontario's accident benefits ecosystem, where treatment plan inflation is a documented fraud vector.
+Medical clinics emerged as the highest-severity provider sector with an average claim value of **$57.3k**, consistent with known SABS abuse patterns in Ontario's accident benefits ecosystem where treatment plan inflation is a documented fraud vector.
 
 ### Total Exposure Isolated
 **$69.3M** in Exposure-at-Risk surfaced across all six typologies after Gold-layer risk scoring and SIU referral flagging.
@@ -152,7 +151,7 @@ This project is scoped to Ontario's insurance regulatory environment:
 - **FSRA (Financial Services Regulatory Authority of Ontario):** Governs auto and health insurance conduct in Ontario. The SIU referral mart is structured to align with FSRA's fraud reporting expectations.
 - **SABS (Statutory Accident Benefits Schedule):** Ontario Regulation 34/10. The claim structures, treatment billing patterns, and provider relationships in this dataset reflect SABS-specific fraud vectors.
 - **IBC Fraud Bureau:** Industry-standard fraud referral and reporting framework referenced for whale concentration and bot detection thresholds.
-- **PIPEDA / PHIPA:** Federal and provincial privacy constraints that make real insurance claims data inaccessible for portfolio use - the direct motivation for adversarial synthetic data generation.
+- **PIPEDA / PHIPA:** Federal and provincial privacy constraints that make real insurance claims data inaccessible for portfolio use, and the direct motivation for adversarial synthetic data generation.
 
 ---
 
@@ -162,7 +161,7 @@ The project architecture, data model design, fraud detection logic, STAR schema,
 
 LLM assistance was used in two specific, bounded ways:
 
-1. **Documentation scaffolding:** Accelerating `schema.yml` field-level documentation across 300k+ records - a mechanical task disproportionate to its analytical value.
+1. **Documentation scaffolding:** Accelerating `schema.yml` field-level documentation across 300k+ records, a mechanical task disproportionate to its analytical value.
 2. **Syntax debugging:** Used as a pair-programming tool for complex Snowflake JSON flattening syntax and REGEX pattern refinement.
 
 All AI-generated output was reviewed, functionally tested, and validated against the project's forensic logic before commit. The analytical decisions, typology definitions, and risk scoring thresholds are original.
@@ -205,9 +204,9 @@ AIFRE/
 
 - [x] Bronze ingestion layer
 - [x] Silver cleansing and SCD Type 2 identity tracking
-- [x] Gold analytical marts
+- [x] Gold analytical marts (`fct_claimant_risk`, `fct_daily_velocity`, `fct_fraud_exposure`, `dim_provider_status`)
 - [x] Bot detection and whale concentration analysis
-- [ ] SIU referral mart with FSRA-aligned risk tiering
+- [ ] `mart_siu_referral_flags`: SIU escalation logic with FSRA-aligned risk tiering
 - [ ] Tableau executive dashboard
 - [ ] dbt test suite expansion (referential integrity, accepted value ranges)
 - [ ] Structuring pattern mart with threshold proximity scoring
