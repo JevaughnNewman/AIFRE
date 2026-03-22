@@ -79,6 +79,7 @@ High-velocity analytical marts optimized for BI consumption and regulatory repor
 - `fct_daily_velocity`: Submission velocity analysis for automated and bot-driven claim detection
 - `fct_fraud_exposure`: Claimant exposure concentration and whale pattern analysis
 - `dim_provider_status`: Provider and clinic risk profiling by sector
+- `mart_siu_referral_flags`: SIU referral actions and investigator-facing reason strings, consuming pre-computed risk scores from int_user_risk_scoring
 
 Materialized as **tables** for query performance against Tableau.
 
@@ -120,8 +121,8 @@ dim_clinic ───── fct_claims ───── dim_device
 | **Synthetic Identity** | Fabricated claimants assembled from real identity fragments, linked via SIN pattern across source domains | SCD Type 2 evolution tracking; cross-domain SIN pool join |
 | **Bot / Automated Submission** | Automated claim submissions via proxy IP pool, non-human browser agents, and near-zero dwell time | IP velocity analysis; browser fingerprint scoring; dwell time thresholds |
 | **Geographic Collision Rings** | Multiple unrelated identities sharing a single GTA building address to evade exact-match deduplication | REGEX canonicalization; postal code cluster analysis |
-| **Whale Concentration** | Disproportionate exposure concentrated in a small claimant population via power law funneling | Concentration ratio analysis; exposure percentile ranking |
-| **Clinic / Provider Collusion** | Hotspot claimants funneled toward a fixed pool of suspicious merchants at elevated billing amounts | Dominant clinic ratio; co-occurrence frequency analysis |
+| **Whale Concentration** | Disproportionate exposure concentrated in a small claimant population via power law funnelling | Concentration ratio analysis; exposure percentile ranking |
+| **Clinic / Provider Collusion** | Hotspot claimants funnelled toward a fixed pool of suspicious merchants at elevated billing amounts | Dominant clinic ratio; co-occurrence frequency analysis |
 | **Structuring-like Patterns** | Claims clustered below adjudication thresholds, high-frequency small submissions, and round-number billing concentrations | Threshold proximity scoring; round-number frequency distributions |
 
 > For full typology encoding methodology, prevalence rates, and generation code, see [DATA_GENERATION.md](./DATA_GENERATION.md).
@@ -137,7 +138,7 @@ A single IP address (`45.33.22.11`) was responsible for **2,270 fraudulent claim
 The top 10 claimants by exposure represent **$1.1M** in concentrated risk, a Whale Concentration ratio that would trigger enhanced review under IBC fraud detection guidelines.
 
 ### Sector Risk: Medical Clinics
-Medical clinics emerged as the highest-severity provider sector with an average claim value of **$57.3k**, consistent with known SABS abuse patterns in Ontario's accident benefits ecosystem where treatment plan inflation is a documented fraud vector.
+Medical clinics emerged as the highest-severity provider sector with an average claim value of **$57.3k**, consistent with known SABS abuse patterns in Ontario's accident benefits ecosystem, where treatment plan inflation is a documented fraud vector.
 
 ### Total Exposure Isolated
 **$69.3M** in Exposure-at-Risk surfaced across all six typologies after Gold-layer risk scoring and SIU referral flagging.
@@ -148,7 +149,7 @@ Medical clinics emerged as the highest-severity provider sector with an average 
 
 This project is scoped to Ontario's insurance regulatory environment:
 
-- **FSRA (Financial Services Regulatory Authority of Ontario):** Governs auto and health insurance conduct in Ontario. The SIU referral mart is structured to align with FSRA's fraud reporting expectations.
+- **FSRA (Financial Services Regulatory Authority of Ontario): Governs auto and health insurance conduct in Ontario. mart_siu_referral_flags produces referral actions and reason strings aligned with FSRA's expectation that insurers maintain systematic fraud detection and escalation processes under the Insurance Act (Ontario).
 - **SABS (Statutory Accident Benefits Schedule):** Ontario Regulation 34/10. The claim structures, treatment billing patterns, and provider relationships in this dataset reflect SABS-specific fraud vectors.
 - **IBC Fraud Bureau:** Industry-standard fraud referral and reporting framework referenced for whale concentration and bot detection thresholds.
 - **PIPEDA / PHIPA:** Federal and provincial privacy constraints that make real insurance claims data inaccessible for portfolio use, and the direct motivation for adversarial synthetic data generation.
@@ -206,7 +207,7 @@ AIFRE/
 - [x] Silver cleansing and SCD Type 2 identity tracking
 - [x] Gold analytical marts (`fct_claimant_risk`, `fct_daily_velocity`, `fct_fraud_exposure`, `dim_provider_status`)
 - [x] Bot detection and whale concentration analysis
-- [ ] `mart_siu_referral_flags`: SIU escalation logic with FSRA-aligned risk tiering
+- [x] `mart_siu_referral_flags`: SIU escalation logic with FSRA-aligned risk tiering
 - [ ] Tableau executive dashboard
 - [ ] dbt test suite expansion (referential integrity, accepted value ranges)
 - [ ] Structuring pattern mart with threshold proximity scoring
