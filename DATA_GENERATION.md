@@ -36,25 +36,25 @@ The synthetic data is split across three scripts, each producing a distinct sour
 
 **Total: 300,000+ records across three source domains.**
 
-The fragmentation is intentional. No single source file contains enough information to detect fraud in isolation. The forensic signal only becomes visible when the Silver layer joins all three domains — which is the exact problem the Medallion architecture is designed to solve.
+The fragmentation is intentional. No single source file contains enough information to detect fraud in isolation. The forensic signal only becomes visible when the Silver layer joins all three domains, which is the exact problem the Medallion architecture is designed to solve.
 
 ---
 
 ## Cross-Dataset Forensic Anchor: APP-CRITICAL-999
 
-A deliberate forensic breadcrumb was embedded across all three scripts. The entity `APP-CRITICAL-999` ("Michael Smith") appears with consistent high-risk attributes in every source domain:
+A deliberate forensic breadcrumb was embedded across all three scripts. The entity `APP-CRITICAL-999` ("Michael Smith") appears with consistently high-risk attributes in every source domain:
 
 - **Identity:** Assigned SIN `999-999-999` and hotspot postal code `M3N 1Y8` (North York)
 - **Network logs:** Hardcoded to IP `192.168.1.50`, device `DEV-FRAUD-RING-001`, browser `PostmanRuntime` (a non-human client)
 - **Ledger:** Pulled into the fraud SIN pool, triggering amounts between $5,000 and $9,500 via `MANUAL_KEY_IN` entry mode
 
-This entity is undetectable as fraudulent from any single source file. It only surfaces as a high-confidence fraud signal when all three domains are joined in the Silver fusion layer — a deliberate design choice that validates the architecture's core premise.
+This entity is undetectable as fraudulent from any single source file. It only surfaces as a high-confidence fraud signal when all three domains are joined in the Silver fusion layer, which is a deliberate design choice that validates the architecture's core premise.
 
 ---
 
 ## Fraud Typologies: Encoding Decisions
 
-Each typology was deliberately seeded at a controlled prevalence rate chosen upfront. Rates were designed to ensure fraud signals are present but non-trivial — detectable only through the correct analytical approach, not through a simple filter.
+Each typology was deliberately seeded at a controlled prevalence rate chosen upfront. Rates were designed to ensure fraud signals are present but non-trivial and detectable only through the correct analytical approach, not through a simple filter.
 
 ### 1. Synthetic Identity Fraud
 
@@ -78,7 +78,7 @@ if app_id in fraud_sin_ids:
 
 ### 2. Geographic Collision Rings (Address Munging)
 
-**Prevalence:** 10% of the claimant population forced into four specific GTA hotspot addresses.
+**Prevalence:** 10% of the claimant population was forced into four specific GTA hotspot addresses.
 
 **Encoding (`identity_gen.py`):**
 Four real high-risk postal codes in the GTA corridor were hardcoded as hotspot anchors. 10% of claimants are assigned to these locations with unit-level address variation to simulate multiple unrelated identities sharing a single building.
@@ -100,9 +100,9 @@ The GTA corridor was chosen deliberately. Its dense M- and L-prefix postal code 
 
 ---
 
-### 3. Clinic / Provider Collusion (Power Law Funneling)
+### 3. Clinic / Provider Collusion (Power Law Funnelling)
 
-**Prevalence:** 40% of hotspot claimants funneled toward six named suspicious merchants.
+**Prevalence:** 40% of hotspot claimants funnelled toward six named suspicious merchants.
 
 **Encoding (`ledger_gen.py`):**
 A pool of six named clinics and legal hubs was defined alongside 1,000 standard vendor nodes. Hotspot claimants — identified by cross-referencing the identity file at generation time — face a 40% probability of being routed to a suspicious merchant at elevated billing amounts.
