@@ -67,7 +67,7 @@ Reference/lookup data (postal code mappings, sector code descriptions) uses **SC
 Custom REGEX logic collapses identity fragmentation clusters in the GTA corridor. A single fraudulent claimant may appear as "123 Main St", "123 Main Street", "123 mane st Apt 2B", and "123 MAIN STREET UNIT 2" across different claim submissions. Silver standardizes these into canonical identity clusters before joins.
 
 **3. Domain Fusion**
-Fragmented digital fingerprints (IP logs, device IDs) are joined to financial claim records to close the "Visibility Gap" - the space between what a claimant submits and what their network behaviour reveals. The three source domains were generated with deliberate cross-dataset linkages — fraud signals embedded in identity, ledger, and network logs simultaneously — meaning domain fusion is the only path to a confirmed fraud signal. No single source is sufficient in isolation.
+Fragmented digital fingerprints (IP logs, device IDs) are joined to financial claim records to close the "Visibility Gap" - the space between what a claimant submits and what their network behaviour reveals. The three source domains were generated with deliberate cross-dataset linkages - fraud signals embedded in identity, ledger, and network logs simultaneously - meaning domain fusion is the only path to a confirmed fraud signal. No single source is sufficient in isolation.
 
 Materialized as **views** to remain flexible as upstream data evolves.
 
@@ -215,3 +215,4 @@ AIFRE/
 ---
 
 *Built to reflect the operational reality of Ontario's insurance fraud environment. All data is synthetic and generated to model real-world adversarial characteristics under PIPEDA/PHIPA privacy constraints.*
+
