@@ -208,9 +208,10 @@ AIFRE/
 - [x] Gold analytical marts (`fct_claimant_risk`, `fct_daily_velocity`, `fct_fraud_exposure`, `dim_provider_status`)
 - [x] Bot detection and whale concentration analysis
 - [x] `mart_siu_referral_flags`: SIU escalation logic with FSRA-aligned risk tiering
+- [x] dbt test suite expansion (referential integrity, accepted value ranges)
+- [x] Structuring pattern mart with threshold proximity scoring
 - [ ] Tableau executive dashboard
-- [ ] dbt test suite expansion (referential integrity, accepted value ranges)
-- [ ] Structuring pattern mart with threshold proximity scoring
+- [ ] Executive Slide Deck
 
 ---
 
