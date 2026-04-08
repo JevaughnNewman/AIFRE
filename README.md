@@ -5,9 +5,9 @@
 
 **AIFRE** is a production-grade forensic pipeline designed to bridge the "Visibility Gap" in claims data. By simulating an adversarial insurance environment, this project identifies **$69.3M in hidden exposure** across six distinct fraud typologies.
 
-① **Interactive Dashboard** → [View Tableau Dashboard HERE](#)  
-② **Executive Strategy Deck** → [View Presentation HERE](#)  
-③ **Technical Architecture** → [View Snowflake & dbt logic](https://github.com/JevaughnNewman/AIFRE)
+① **Interactive Dashboard** → [View Tableau Dashboard](#)  
+② **Executive Strategy Deck** → [View Presentation](#)  
+③ **Technical Architecture** → [View Snowflake & dbt logic]([https://github.com/JevaughnNewman/AIFRE](https://github.com/JevaughnNewman/AIFRE/tree/main/dbt_project)
 
 ---
 
