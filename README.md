@@ -1,17 +1,73 @@
-# AIFRE - Adversarial Identity & Fraud Risk Engine
+# AIFRE: Adversarial Identity & Fraud Risk Engine
+### *Reducing Financial Leakage through Forensic Analytics & Automated Risk Decisioning*
 
-> A Snowflake & dbt-powered Medallion Architecture for Synthetic Fraud Detection and Behavioural Forensic Auditing in Ontario's Insurance Ecosystem.
-
----
-
-## Project Motivation
-
-Ontario's Statutory Accident Benefits Schedule (SABS) is one of the most fraud-vulnerable insurance frameworks in Canada. Informed by front-line exposure to claims and accident benefits processing, this project was built to answer a specific question: **can a modern analytics engineering stack detect coordinated fraud patterns that manual adjudication consistently misses?**
-
-AIFRE simulates the data environment of a mid-sized Ontario insurer (raw, adversarial, and deliberately difficult) and constructs a forensic pipeline capable of surfacing $69.3M in isolated exposure-at-risk across six distinct fraud typologies.
+> [!IMPORTANT]
+> **The Business Problem:** How much insurance exposure is driven by coordinated fraud rings that appear as isolated, "clean" claims to manual adjudication? AIFRE solves the **"Visibility Gap"** between siloed claims data and hidden network behaviour.
 
 ---
 
+## 🚀 The Business Case: From Reactive to Proactive
+
+In highly regulated insurance environments, manual reviews often fail to catch sophisticated, coordinated attacks. AIFRE simulates the data environment of a mid-sized insurer to answer a single strategic question: **Can we isolate high-probability fraud *before* payment, rather than auditing it *after* the loss?**
+
+* **Financial Exposure Isolated:** $69.3M in high-risk claims.
+* **Regulatory Impact:** Built to exceed expectations for systematic fraud detection (FSRA/SABS standards).
+* **Core Objective:** Reduction in loss ratios by automating the identification of bot-driven and professional fraud rings.
+
+---
+
+## 🧠 My Approach: Domain Expertise Meets Data Engineering
+
+I approached this project not just as a developer, but as a risk professional. I assumed that a sophisticated fraudster will never use the same name twice, but they **will** reuse hardware, digital fingerprints, and physical locations.
+
+### The Strategy
+* **Assumption:** "Dirty" data is a feature. Fraudsters use "Address Munging" (e.g., "Apt 2" vs "Unit 2") to evade deduplication.
+* **The Framework:** I utilized a **Medallion Architecture** in Snowflake to ensure every "piece of evidence" (Bronze) is preserved for forensic auditing, while the **Gold Marts** provide actionable intelligence.
+* **Analytical Choice:** I implemented **SCD Type 2** for identity tracking. It is the only way to detect **"Nurtured Accounts"**—entities that slowly evolve their profiles over 12 months to build credibility before committing high-value fraud.
+
+---
+
+## 🔍 Key Forensic Insights (Leading with the "Why")
+
+### 1. The Bot Attack ($3.68M Exposure)
+**The Insight:** High-frequency, automated submissions are a primary leakage vector.
+**The Evidence:** A single IP address was linked to **2,270 fraudulent claims**. By fusing device telemetry with financial records, we exposed a bot-driven ring that manual adjusters would have seen as 2,000 separate accidents.
+
+### 2. Medical Clinic Sector Risk
+**The Insight:** Provider collusion is systemic, not incidental.
+**The Evidence:** Medical clinics emerged as the highest-severity sector with an average claim value of **$57.3k**. This confirms that "Treatment Plan Inflation" is a primary driver of rising loss ratios.
+
+### 3. "Whale" Concentration
+**The Insight:** 1% of claimants represent a disproportionate amount of risk.
+**The Evidence:** The top 10 claimants alone represent **$1.1M in concentrated risk**. Shifting SIU resources to these "Whales" yields a significantly higher recovery-per-hour than random auditing.
+
+---
+
+## 📈 Recommendations & Next Steps
+
+Based on the AIFRE forensic findings, the following business actions are recommended:
+
+1.  **Immediate Velocity Blocking:** Implement real-time blocks on proxy IP pools and non-human browser fingerprints surfaced in the `fct_daily_velocity` mart.
+2.  **SIU Resource Reallocation:** Use the `mart_siu_referral_flags` to prioritize investigations by **Composite Risk Score** rather than claim date.
+3.  **Regulatory Compliance:** Deploy the SIU referral models as the "Source of Truth" for reporting, providing a transparent, logic-based audit trail for every flagged claim.
+
+---
+
+## 🛠 Project Stats at a Glance
+
+| Metric | Value |
+| :--- | :--- |
+| **Data Volume** | 300,000+ Records across 3 source domains (CSV/JSON) |
+| **Core Stack** | Snowflake, dbt-core, Python, Tableau |
+| **Fraud Typologies** | 6 (Synthetic, Bot, Collision Rings, Whale, Collusion, Structuring) |
+| **Financial Exposure** | $69.3M Isolated |
+| **Regulatory Scope** | FSRA, SABS, IBC Fraud Bureau Standards |
+
+---
+
+## 🏗 Technical Architecture: Forensic Medallion Framework
+
+The engine uses a three-tier Medallion Architecture within Snowflake. Every transformation is auditable, ensuring data is never overwritten at the source.
 ## Project Stats at a Glance
 
 | Metric | Value |
