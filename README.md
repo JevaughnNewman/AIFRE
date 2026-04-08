@@ -104,22 +104,6 @@ dim_clinic ───── fct_claims ───── dim_device
                     dim_date
                           │
                     dim_location
-```
-
-AIFRE/
-├── snowflake_setup/        # Warehouse, database, and role configuration
-├── dbt_project/
-│   ├── models/
-│   │   ├── bronze/         # Raw ingestion models
-│   │   ├── silver/         # Cleansing, SCD snapshots, domain fusion
-│   │   └── gold/           # Analytical marts and risk scoring
-│   ├── snapshots/          # SCD Type 2 identity tracking
-│   ├── seeds/              # Watchlist reference data (flagged IPs, blacklisted clinics)
-│   └── tests/              # dbt schema tests (not null, unique, referential integrity)
-├── Visuals/                # Architecture diagrams and dashboard screenshots
-├── DATA_GENERATION.md      # Synthetic data design, typology encoding, and privacy compliance
-└── README.md
-```
 
 ---
 
