@@ -78,7 +78,7 @@ The engine uses a three-tier Medallion Architecture within Snowflake. Every tran
 ```
 
 #### **Bronze (The Evidence Locker)**
-* **Raw ingestion of identity records, financial claims, and network logs. We preserve address variants and malformed JSON because forensic re-processing requires original evidence.
+* Raw ingestion of identity records, financial claims, and network logs. We preserve address variants and malformed JSON because forensic re-processing requires original evidence.
 
 #### **Silver (Investigation & Fusion)**
 * **Address Munging Resolution:** Custom REGEX logic collapses identity fragmentation clusters (e.g., standardizing "123 Main St" vs "123 Main Street").
