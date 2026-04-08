@@ -54,7 +54,28 @@ I approached this project not just as a developer, but as a risk professional wi
 
 The engine uses a three-tier Medallion Architecture within Snowflake. Every transformation is auditable, ensuring data is never overwritten at the source.
 
+```text
+       RAW SOURCES (CSV / JSON)
+               │
+               ▼
+┌─────────────────────────────┐
+│       🥉 BRONZE             │  Immutable Evidence Locker
+│       Raw Ingestion         │  Exact source fidelity, no cleansing
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│       🥈 SILVER             │  Investigation & Fusion Layer
+│       Transformation        │  SCD Type 2 · REGEX · Domain Fusion
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│       🥇 GOLD               │  Decision Support Layer
+│       Analytical Marts      │  Risk Scoring · SIU Flags · KPIs
+└─────────────────────────────┘
 
+```
 
 #### **Bronze (The Evidence Locker)**
 Raw ingestion of identity records, financial claims, and network logs. We preserve address variants and malformed JSON because forensic re-processing requires original evidence.
@@ -85,29 +106,6 @@ dim_clinic ───── fct_claims ───── dim_device
                     dim_location
 ```
 
----
-
-RAW SOURCES (CSV / JSON)
-               │
-               ▼
-┌─────────────────────────────┐
-│       🥉 BRONZE             │  Immutable Evidence Locker
-│       Raw Ingestion         │  Exact source fidelity, no cleansing
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│       🥈 SILVER             │  Investigation & Fusion Layer
-│       Transformation        │  SCD Type 2 · REGEX · Domain Fusion
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│       🥇 GOLD               │  Decision Support Layer
-│       Analytical Marts      │  Risk Scoring · SIU Flags · KPIs
-└─────────────────────────────┘
-
-```
 AIFRE/
 ├── snowflake_setup/        # Warehouse, database, and role configuration
 ├── dbt_project/
