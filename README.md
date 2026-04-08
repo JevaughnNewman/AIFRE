@@ -7,7 +7,7 @@
 
 ① **Interactive Dashboard** → [View Tableau Dashboard](#)  
 ② **Executive Strategy Deck** → [View Presentation](#)  
-③ **Technical Architecture** → [View Snowflake & dbt logic]([https://github.com/JevaughnNewman/AIFRE](https://github.com/JevaughnNewman/AIFRE/tree/main/dbt_project)
+③ **Technical Architecture** → [View Snowflake & dbt logic](https://github.com/JevaughnNewman/AIFRE/tree/main/dbt_project)
 
 ---
 
