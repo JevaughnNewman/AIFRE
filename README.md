@@ -90,18 +90,21 @@ dim_clinic ───── fct_claims ───── dim_device
 RAW SOURCES (CSV / JSON)
         │
         ▼
+        
 ┌───────────────────┐
 │  🥉 BRONZE        │  Immutable Evidence Locker
 │  Raw Ingestion    │  Exact source fidelity, no cleansing
 └────────┬──────────┘
          │
          ▼
+         
 ┌───────────────────┐
 │  🥈 SILVER        │  Investigation & Fusion Layer
 │  Transformation   │  SCD Type 2 · REGEX Cleansing · Domain Joins
 └────────┬──────────┘
          │
          ▼
+         
 ┌───────────────────┐
 │  🥇 GOLD          │  Decision Support Layer
 │  Analytical Marts │  Risk Scoring · SIU Flags · Executive KPIs
