@@ -13,7 +13,7 @@
 
 ### 🚀 The Business Case: Reducing Financial Leakage
 
-In the Ontario SABS framework, manual adjudication often fails to detect coordinated fraud. AIFRE shifts the paradigm from **reactive auditing** to **proactive risk mitigation** by surfacing patterns that appear as isolated, "clean" claims to the human eye.
+In the Ontario Statuory Accident Benefits Schedule (SABS) framework, manual adjudication often fails to detect coordinated fraud. AIFRE shifts the paradigm from **reactive auditing** to **proactive risk mitigation** by surfacing patterns that appear as isolated, "clean" claims to the human eye.
 
 * **Financial Exposure Isolated:** $69.3M in high-risk claims.
 * **Target ROI:** Significant reduction in loss ratios by automating the identification of bot-driven and professional fraud rings before payment.
